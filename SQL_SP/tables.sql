@@ -1,0 +1,24 @@
+CREATE TABLE `otp_code` (
+    phone CHAR(11) NOT NULL,
+    code CHAR(5) NOT NULL,
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expire_at TIMESTAMP NOT NULL, 
+    UNIQUE KEY (phone)
+);
+
+CREATE TABLE `user` (
+    user_id MEDIUMINT UNSIGNED AUTO_INCREMENT,
+    phone CHAR(11) NOT NULL,
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_active BOOLEAN DEFAULT TRUE,
+    PRIMARY KEY (user_id)
+);
+
+CREATE TABLE `refresh_token` (
+    token CHAR(255) NOT NULL PRIMARY KEY,
+    user_id MEDIUMINT UNSIGNED NOT NULL,
+    expires_at DATETIME NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    revoked BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (user_id) REFERENCES `user`(user_id)
+);
